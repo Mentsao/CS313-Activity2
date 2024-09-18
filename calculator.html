@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simple Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #cf9d9d;
+    }
+    .calculator {
+      width: 320px;
+      border: 3px solid #664040;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      background-color: #ba7373;
+      padding: 20px;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: calc(100% - 22px);
+      padding: 10px;
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      border: 1px solid #ffffff;
+      border-radius: 4px;
+      text-align: right;
+      box-sizing: border-box;
+    }
+    .button-row {
+      display: flex;
+      justify-content: center;
+    }
+    .button-row-full-width {
+      display: flex;
+      justify-content: flex-end;
+    }
+    button {
+      width: 70px;
+      height: 70px;
+      margin: 5px;
+      font-size: 1.2em;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background-color: #f0f0f0;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #ffffff;
+    }
+    .operator {
+      background-color: #f9a825;
+      color: white;
+    }
+    .operator:hover {
+      background-color: #f57f17;
+    }
+    .equal {
+      background-color: #4caf50;
+      color: white;
+    }
+    .equal:hover {
+      background-color: #388e3c;
+    }
+    .clear {
+      background-color: #f44336;
+      color: white;
+    }
+    .clear:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator">
+  <input type="text" id="display" placeholder="0" disabled>
+  
+  <div class="button-row-full-width">
+    <button class="clear" onclick="clearDisplay()">C</button>
+  </div>
+  
+  <div class="button-row">
+    <button onclick="appendToDisplay('7')">7</button>
+    <button onclick="appendToDisplay('8')">8</button>
+    <button onclick="appendToDisplay('9')">9</button>
+    <button class="operator" onclick="appendToDisplay('÷')">÷</button>
+  </div>
+  <div class="button-row">
+    <button onclick="appendToDisplay('4')">4</button>
+    <button onclick="appendToDisplay('5')">5</button>
+    <button onclick="appendToDisplay('6')">6</button>
+    <button class="operator" onclick="appendToDisplay('x')">x</button>
+  </div>
+  <div class="button-row">
+    <button onclick="appendToDisplay('1')">1</button>
+    <button onclick="appendToDisplay('2')">2</button>
+    <button onclick="appendToDisplay('3')">3</button>
+    <button class="operator" onclick="appendToDisplay('-')">-</button>
+  </div>
+  <div class="button-row">
+    <button onclick="appendToDisplay('0')">0</button>
+    <button onclick="appendToDisplay('.')">.</button>
+    <button class="equal" onclick="calculate()">=</button>
+    <button class="operator" onclick="appendToDisplay('+')">+</button>
+  </div>
+</div>
+
+<script>
+  function clearDisplay() {
+    document.getElementById('display').value = '';
+  }
+
+  function appendToDisplay(value) {
+    const display = document.getElementById('display');
+    if (display.value === '0' && value !== '.') {
+      display.value = value;
+    } else {
+      display.value += value;
+    }
+  }
+
+  function calculate() {
+    const display = document.getElementById('display');
+    try {
+      const result = eval(display.value.replace('x', '*').replace('÷', '/'));
+      if (result === undefined || result === Infinity || Number.isNaN(result)) {
+        throw new Error('Invalid calculation');
+      }
+      display.value = result;
+    } catch (e) {
+      display.value = 'Error';
+    }
+  }
+</script>
+
+</body>
+</html>
